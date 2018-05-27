@@ -1,11 +1,25 @@
 package com.github.gv2011.jctrl.service;
 
+import static com.github.gv2011.util.ex.Exceptions.call;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class SomeService {
+public class TestService {
 
     private static final CountDownLatch STOP = new CountDownLatch(1);
+
+    public static final void main(final String[] args){
+      final Thread main = Thread.currentThread();
+      Runtime.getRuntime().addShutdownHook(new Thread(
+        ()->{
+          STOP.countDown();
+          call(()->main.join());
+        },
+        "shutdown"
+      ));
+      run(args);
+    }
 
     public static void run(final String[] args) {
       try{

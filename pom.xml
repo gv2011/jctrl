@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>parent-gv</artifactId>
@@ -14,6 +14,11 @@
   <name>Vinz JCtrl</name>
   <description>Java System Controller</description>
   <url>https://github.com/gv2011/jctrl</url>
+
+  <properties>
+    <util.version>0.3.10</util.version>
+  </properties>
+
   <licenses>
     <license>
       <name>MIT License</name>
@@ -36,7 +41,28 @@
     <module>core</module>
     <module>service</module>
   </modules>
-  <properties>
-    <util.version>0.3.10</util.version>
-  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+          <configuration>
+          <source>10</source>
+                <target>10</target>
+            <release>10</release>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.ow2.asm</groupId>
+              <artifactId>asm</artifactId>
+              <version>6.2</version> <!-- Use newer version of ASM -->
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

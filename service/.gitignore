@@ -3,3 +3,6 @@
 /target/
 /.classpath
 /.project
+/err.txt
+/in.txt
+/out.txt
