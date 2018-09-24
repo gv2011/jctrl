@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 
-import com.github.gv2011.jctrl.ControlSocket.Command;
+import com.github.gv2011.jctrl.ShutdownSocket.Command;
 import com.github.gv2011.util.Nothing;
 
 public class ControlConnection {

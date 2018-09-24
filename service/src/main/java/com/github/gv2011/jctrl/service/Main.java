@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.gv2011.jctrl.ControlSocket;
+import com.github.gv2011.jctrl.ShutdownSocket;
 import com.github.gv2011.jctrl.JCtrl;
-import com.github.gv2011.jctrl.ControlSocket.Command;
+import com.github.gv2011.jctrl.ShutdownSocket.Command;
 import com.github.gv2011.util.Nothing;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -22,7 +22,7 @@ public class Main {
 
   static enum MainCommand{RUN, STOP, RUN_INTERNAL}
 
-  static final int CONTROL_PORT = ControlSocket.CONTROL_PORT;
+  static final int CONTROL_PORT = ShutdownSocket.CONTROL_PORT;
 
   private static final Logger LOG = getLogger(Main.class);
 
@@ -55,6 +55,7 @@ public class Main {
     }
    }
 
+  @SuppressWarnings("resource")
   private static void runTarget() {
     new JCtrl(PROCESS).run();
   }

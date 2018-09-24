@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-import com.github.gv2011.jctrl.ControlSocket;
-import com.github.gv2011.jctrl.ControlSocket.Command;
+import com.github.gv2011.jctrl.ShutdownSocket;
+import com.github.gv2011.jctrl.ShutdownSocket.Command;
 import com.github.gv2011.jctrl.service.ControlConnection;
 import com.github.gv2011.jctrl.service.DetachedRunner;
 
@@ -22,14 +22,14 @@ public class DetachedRunnerMTst {
 
   @Test
   public void testRun() throws InterruptedException {
-    final AtomicReference<ControlSocket> controlSocket = new AtomicReference<>();
+    final AtomicReference<ShutdownSocket> controlSocket = new AtomicReference<>();
     final Thread detached = new Thread(()->{
       LOG.info("Starting DetachedRunner.");
       new DetachedRunner(){
         @Override
         void startService() {
           LOG.info("Starting service.");
-          controlSocket.set(ControlSocket.create(()->stop(), "test"));
+          controlSocket.set(ShutdownSocket.create(()->stop(), "test"));
           LOG.info("Service started.");
         }
       }.run();

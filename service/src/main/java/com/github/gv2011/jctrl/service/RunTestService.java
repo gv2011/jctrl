@@ -10,8 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 
-import com.github.gv2011.jctrl.service.Main.MainCommand;
-
 public class RunTestService {
   private static final String VERSION = "0.0.1-SNAPSHOT";
 
@@ -36,9 +34,11 @@ public class RunTestService {
         Thread.sleep(3000);
         LOG.info("Destroying service.", PROCESS);
 
+        LOG.info("supportsNormalTermination: {}", p.supportsNormalTermination());
         p.destroy();
         if(!p.waitFor(1, TimeUnit.SECONDS)){
           LOG.info("Destroying forcibly.", PROCESS);
+          @SuppressWarnings("unused")
           final int s = p.destroyForcibly().waitFor();
         }
         LOG.info("Done.", PROCESS);

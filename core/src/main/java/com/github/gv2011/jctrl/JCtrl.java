@@ -5,9 +5,10 @@ import static com.github.gv2011.util.ex.Exceptions.call;
 
 import java.util.concurrent.CountDownLatch;
 
+import com.github.gv2011.util.AutoCloseableNt;
 import com.github.gv2011.util.Nothing;
 
-public class JCtrl {
+public class JCtrl implements AutoCloseableNt{
 
   private final CountDownLatch latch = new CountDownLatch(1);
   private final String processName;
@@ -18,15 +19,14 @@ public class JCtrl {
   }
 
   public Nothing run(){
-    final ControlSocket controlSocket = ControlSocket.create(()->stop(), processName);
+    final ShutdownSocket controlSocket = ShutdownSocket.create(()->close(), processName);
     call(()->latch.await());
     controlSocket.waitUntilShutdown();
     return nothing();
   }
 
-  private Nothing stop() {
+  public void close() {
     latch.countDown();
-    return nothing();
   }
 
 }

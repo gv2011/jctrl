@@ -14,7 +14,7 @@ import java.net.ServerSocket;
 
 import org.slf4j.Logger;
 
-import com.github.gv2011.jctrl.ControlSocket.Command;
+import com.github.gv2011.jctrl.ShutdownSocket.Command;
 import com.github.gv2011.jctrl.service.Main.MainCommand;
 
 public class DetachedRunner {
