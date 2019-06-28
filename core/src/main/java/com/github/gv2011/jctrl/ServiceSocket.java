@@ -134,7 +134,6 @@ public final class ServiceSocket implements AutoCloseableNt{
   }
 
   private Optional<Command> readCommand(final BufferedReader r) throws IOException {
-    Gson.
     return Optional.ofNullable(r.readLine()).map(Command::valueOf);
   }
 
