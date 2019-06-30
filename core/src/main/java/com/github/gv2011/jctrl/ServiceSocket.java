@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 
 import com.github.gv2011.util.AutoCloseableNt;
 import com.github.gv2011.util.Nothing;
-import com.github.gv2011.util.json.JsonUtils;
 
 public final class ServiceSocket implements AutoCloseableNt{
 

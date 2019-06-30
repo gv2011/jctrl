@@ -5,7 +5,7 @@
   <parent>
     <artifactId>parent-gv</artifactId>
     <groupId>com.github.gv2011</groupId>
-    <version>0.4.0-SNAPSHOT</version>
+    <version>0.4.1-SNAPSHOT</version>
   </parent>
   <groupId>com.github.gv2011.jctrl</groupId>
   <artifactId>jctrl-parent</artifactId>
@@ -16,7 +16,7 @@
   <url>https://github.com/gv2011/jctrl</url>
 
   <properties>
-    <util.version>0.4.0-SNAPSHOT</util.version>
+    <util.version>0.4.1-SNAPSHOT</util.version>
   </properties>
 
   <licenses>
@@ -39,6 +39,7 @@
   </scm>
   <modules>
     <module>core</module>
+    <module>installer</module>
     <module>service</module>
     <module>simple</module>
   </modules>
