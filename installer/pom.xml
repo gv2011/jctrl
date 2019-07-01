@@ -14,7 +14,7 @@
 
   <modules>
     <module>core</module>
-    <module>img</module>
+    <!-- <module>img</module> -->
   </modules>
 
 </project>
