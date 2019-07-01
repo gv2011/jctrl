@@ -1,0 +1,1 @@
+jdeps --module-path target/classes -s --module com.github.gv2011.jctrl.installer
