@@ -18,7 +18,6 @@ C:\Users\u1\.m2\repository\com\google\code\gson\gson\2.8.5\gson-2.8.5.jar;^
 C:\Users\u1\.m2\repository\ch\qos\logback\logback-classic\1.3.0-alpha4\logback-classic-1.3.0-alpha4.jar;^
 C:\Users\u1\.m2\repository\ch\qos\logback\logback-core\1.3.0-alpha4\logback-core-1.3.0-alpha4.jar;^
 C:\Users\u1\.m2\repository\com\sun\mail\javax.mail\1.6.2\javax.mail-1.6.2.jar;^
-C:\Users\u1\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar;^
 C:\Users\u1\.m2\repository\com\github\gv2011\util-test\0.4.1-SNAPSHOT\util-test-0.4.1-SNAPSHOT.jar;^
 C:\Users\u1\.m2\repository\net\jcip\jcip-annotations\1.0\jcip-annotations-1.0.jar;^
 C:\Users\u1\.m2\repository\org\slf4j\slf4j-api\1.8.0-beta4\slf4j-api-1.8.0-beta4.jar^

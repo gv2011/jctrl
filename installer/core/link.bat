@@ -1,4 +1,6 @@
-java --module-path target/classes;^
+jlink ^
+--output target/jlink ^
+--module-path target/classes;^
 C:\Users\u1\.m2\repository\com\github\gv2011\util\0.4.1-SNAPSHOT\util-0.4.1-SNAPSHOT.jar;^
 C:\Users\u1\.m2\repository\com\sun\activation\jakarta.activation\1.2.1\jakarta.activation-1.2.1.jar;^
 C:\Users\u1\.m2\repository\com\github\gv2011\gcol\0.4.1-SNAPSHOT\gcol-0.4.1-SNAPSHOT.jar;^
@@ -20,5 +22,5 @@ C:\Users\u1\.m2\repository\ch\qos\logback\logback-core\1.3.0-alpha4\logback-core
 C:\Users\u1\.m2\repository\com\sun\mail\javax.mail\1.6.2\javax.mail-1.6.2.jar;^
 C:\Users\u1\.m2\repository\com\github\gv2011\util-test\0.4.1-SNAPSHOT\util-test-0.4.1-SNAPSHOT.jar;^
 C:\Users\u1\.m2\repository\net\jcip\jcip-annotations\1.0\jcip-annotations-1.0.jar;^
-C:\Users\u1\.m2\repository\org\slf4j\slf4j-api\1.8.0-beta4\slf4j-api-1.8.0-beta4.jar^
- --module com.github.gv2011.jctrl.installer/com.github.gv2011.jctrl.installer.Main
+C:\Users\u1\.m2\repository\org\slf4j\slf4j-api\1.8.0-beta4\slf4j-api-1.8.0-beta4.jar ^
+--add-modules com.github.gv2011.jctrl.installer
