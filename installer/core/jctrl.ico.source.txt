@@ -1,0 +1,4 @@
+https://github.com/feathericons/feather/blob/3c64e93543fab6befab54c3abd013dd8db52509e/icons/codesandbox.svg
+
+License:
+https://github.com/feathericons/feather/blob/3c64e93543fab6befab54c3abd013dd8db52509e/LICENSE
