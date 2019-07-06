@@ -39,7 +39,8 @@
   </scm>
   <modules>
     <module>core</module>
-    <module>installer</module>
+    <module>gui</module>
+    <module>installerbuilder</module>
     <module>service</module>
     <module>simple</module>
   </modules>

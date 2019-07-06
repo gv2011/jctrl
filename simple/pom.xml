@@ -10,20 +10,65 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jctrl-simple</artifactId>
+  <description>
+    Simple example service for testing.
+  </description>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.gv2011</groupId>
+      <artifactId>util</artifactId>
+      <version>${util.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.gv2011</groupId>
+      <artifactId>gcol</artifactId>
+      <version>${util.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.gv2011</groupId>
+      <artifactId>testutil</artifactId>
+      <version>${util.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attachClasspath</id>
+            <goals>
+              <goal>build-classpath</goal>
+            </goals>
+            <configuration>
+              <attach>true</attach>
+              <includeScope>runtime</includeScope>
+              <outputFile>classpath.txt</outputFile>
+              <prefix>lib/</prefix>
+              <type>txt</type>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>
             <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addClasspath>true</addClasspath>
-              <classpathPrefix>libs/</classpathPrefix>
-              <mainClass>
-                com.github.gv2011.jctrl.Simple
-              </mainClass>
+              <classpathLayoutType>repository</classpathLayoutType>
+              <classpathPrefix>lib/</classpathPrefix>
             </manifest>
+            <manifestEntries>
+              <Implementation-Title>${project.groupId}:${project.artifactId}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
