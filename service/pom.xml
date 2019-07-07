@@ -25,6 +25,12 @@
       <version>${util.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.github.gv2011.m2t</groupId>
+      <artifactId>m2t-api</artifactId>
+      <version>0.0.5-SNAPSHOT</version>
+    </dependency>
+    
+    <dependency>
       <groupId>com.github.gv2011</groupId>
       <artifactId>gcol</artifactId>
       <version>${util.version}</version>
@@ -45,6 +51,15 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+       </resource>
+      <resource>
+        <directory>src/main/filtered</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -23,7 +23,7 @@ public class ModulePathBuilder implements AutoCloseableNt{
 
   public static void main(final String[] args){
     try(ModulePathBuilder mpb = new ModulePathBuilder(M2tFactory.INSTANCE.get().create())){
-      mpb.getAllJars(new ArtifactRefReader().readArtifactRef()).forEach(System.out::println);
+      mpb.getAllJars(new InstallerBuilderMarker().artifactRef()).forEach(System.out::println);
     }
   }
 

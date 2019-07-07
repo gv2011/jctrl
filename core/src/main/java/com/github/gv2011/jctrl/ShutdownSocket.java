@@ -70,19 +70,20 @@ public final class ShutdownSocket {
     executors = Executors.newCachedThreadPool();
     acceptLoop = executors.submit(this::acceptLoop);
     shutdown = new Thread(
-        () -> {
-          call(serverSocket::close);
-          call(() -> acceptLoop.get());
-          executors.shutdown();
-          boolean success = false;
-          while (!success) {
-            success = call(() -> executors.awaitTermination(5, TimeUnit.SECONDS));
-            if (!success) {
-              LOG.warn("{}: Waiting for executor service shutdown.", process);
-            }
+      () -> {
+        call(serverSocket::close);
+        call(() -> acceptLoop.get());
+        executors.shutdown();
+        boolean success = false;
+        while (!success) {
+          success = call(() -> executors.awaitTermination(5, TimeUnit.SECONDS));
+          if (!success) {
+            LOG.warn("{}: Waiting for executor service shutdown.", process);
           }
-        },
-        ShutdownSocket.class.getSimpleName() + "-close");
+        }
+      },
+      ShutdownSocket.class.getSimpleName() + "-close"
+    );
   }
 
   public Nothing waitUntilShutdown() {

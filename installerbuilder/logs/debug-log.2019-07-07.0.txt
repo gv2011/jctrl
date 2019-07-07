@@ -1,0 +1,21 @@
+2019-07-07T11:10:54 INFO  [main] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Loaded service com.github.gv2011.m2t.M2tFactory - implementation class: com.github.gv2011.m2t.imp.M2tFactoryImp.
+2019-07-07T11:10:54 INFO  [main] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Loaded service com.github.gv2011.util.lock.Lock$Factory - implementation class: com.github.gv2011.util.lock.DefaultLockFactory.
+2019-07-07T11:10:55 INFO  [main] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Loaded service com.github.gv2011.util.json.imp.Adapter - implementation class: com.github.gv2011.jsong.JsongAdapter.
+2019-07-07T11:10:55 INFO  [main] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Loaded service com.github.gv2011.util.json.JsonFactory - implementation class: com.github.gv2011.util.json.imp.JsonFactoryImp.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - additionalTypeHandlerFactories: []
+2019-07-07T11:10:55 INFO  [main] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Loaded service com.github.gv2011.util.beans.TypeRegistry - implementation class: com.github.gv2011.util.beans.imp.DefaultTypeRegistry.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Creating type for interface com.github.gv2011.m2t.ArtifactRef.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Created ArtifactRef for interface com.github.gv2011.m2t.ArtifactRef.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.BeanTypeSupport - ArtifactRef: initializing properties.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Creating type for interface com.github.gv2011.m2t.ArtifactId.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Created ArtifactId for interface com.github.gv2011.m2t.ArtifactId.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Creating type for interface com.github.gv2011.m2t.Version.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Created Version for interface com.github.gv2011.m2t.Version.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Creating type for interface com.github.gv2011.m2t.GroupId.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.DefaultTypeRegistry - Created GroupId for interface com.github.gv2011.m2t.GroupId.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.BeanTypeSupport - ArtifactRef: initialized properties: [artifactId, groupId, version].
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.BeanTypeSupport - ArtifactRef: initializing default value.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.BeanTypeSupport - Creating default value for ArtifactRef.
+2019-07-07T11:10:55 DEBUG [main] com.github.gv2011.util.beans.imp.BeanTypeSupport - ArtifactRef initialized default value.
+2019-07-07T11:11:09 INFO  [RecursiveServiceLoader-shutdown] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Closing.
+2019-07-07T11:11:09 INFO  [RecursiveServiceLoader-shutdown] com.github.gv2011.util.serviceloader.RecursiveServiceLoader - Closed - goodbye.

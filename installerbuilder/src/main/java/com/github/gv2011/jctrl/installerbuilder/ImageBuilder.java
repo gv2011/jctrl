@@ -8,37 +8,33 @@ import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.spi.ToolProvider;
 
-import com.github.gv2011.jctrl.simple.Simple;
+import com.github.gv2011.jctrl.service.JCtrlServiceMarker;
+import com.github.gv2011.jctrl.service.Main;
 import com.github.gv2011.m2t.ArtifactId;
+import com.github.gv2011.m2t.ArtifactMarker;
 import com.github.gv2011.m2t.ArtifactRef;
 import com.github.gv2011.m2t.M2tFactory;
-import com.github.gv2011.util.BeanUtils;
 import com.github.gv2011.util.UtilModuleMarker;
 import com.github.gv2011.util.icol.IList;
 import com.github.gv2011.util.tstr.TypedString;
 
-public class SimpleImageBuilder {
+public class ImageBuilder {
 
   public static void main(final String[] args) {
     try(ModulePathBuilder mpb = new ModulePathBuilder(M2tFactory.INSTANCE.get().create())){
-      new SimpleImageBuilder(mpb).buildImage(TypedString.create(ArtifactId.class, "jctrl-service"));
+      new ImageBuilder(mpb).buildImage(TypedString.create(ArtifactId.class, "jctrl-service"));
     }
   }
 
   private final ModulePathBuilder mpb;
 
-  public SimpleImageBuilder(final ModulePathBuilder mpb) {
+  public ImageBuilder(final ModulePathBuilder mpb) {
     this.mpb = mpb;
   }
 
   public void buildImage(final ArtifactId artifactId){
-    final ArtifactRef own = new ArtifactRefReader().readArtifactRef();
-    final ArtifactRef artifactRef = BeanUtils.beanBuilder(ArtifactRef.class)
-      .set(ArtifactRef::groupId   ).to(own.groupId())
-      .set(ArtifactRef::artifactId).to(artifactId)
-      .set(ArtifactRef::version   ).to(own.version())
-      .build()
-    ;
+    final ArtifactMarker marker = new JCtrlServiceMarker();
+    final ArtifactRef artifactRef = marker.artifactRef();
     final String modulePath = toString(mpb.getAllJars(artifactRef));
 
     final ToolProvider tp = ToolProvider.findFirst("jlink").get();
@@ -49,10 +45,10 @@ public class SimpleImageBuilder {
     tp.run(
       out, err,
       new String[]{
-        "--output", "target/jlink-simple",
-        "--launcher", "main="+Simple.class.getModule().getName()+"/"+Simple.class.getName(),
+        "--output", "target/jlink-service",
+        "--launcher", "main="+marker.module().getName()+"/"+Main.class.getName(),
         "--module-path", modulePath,
-        "--add-modules", Simple.class.getModule().getName(),
+        "--add-modules", marker.module().getName(),
         "--add-modules", UtilModuleMarker.class.getModule().getName(),
         "--add-modules", "com.github.gv2011.util.gcol",
         "--add-modules", "ch.qos.logback.classic"
