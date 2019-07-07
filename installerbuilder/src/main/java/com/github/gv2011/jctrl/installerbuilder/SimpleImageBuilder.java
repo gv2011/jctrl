@@ -9,17 +9,19 @@ import java.nio.file.Path;
 import java.util.spi.ToolProvider;
 
 import com.github.gv2011.jctrl.simple.Simple;
+import com.github.gv2011.m2t.ArtifactId;
 import com.github.gv2011.m2t.ArtifactRef;
 import com.github.gv2011.m2t.M2tFactory;
 import com.github.gv2011.util.BeanUtils;
 import com.github.gv2011.util.UtilModuleMarker;
 import com.github.gv2011.util.icol.IList;
+import com.github.gv2011.util.tstr.TypedString;
 
 public class SimpleImageBuilder {
 
   public static void main(final String[] args) {
     try(ModulePathBuilder mpb = new ModulePathBuilder(M2tFactory.INSTANCE.get().create())){
-      new SimpleImageBuilder(mpb).buildImage();
+      new SimpleImageBuilder(mpb).buildImage(TypedString.create(ArtifactId.class, "jctrl-service"));
     }
   }
 
@@ -29,12 +31,12 @@ public class SimpleImageBuilder {
     this.mpb = mpb;
   }
 
-  public void buildImage(){
+  public void buildImage(final ArtifactId artifactId){
     final ArtifactRef own = new ArtifactRefReader().readArtifactRef();
     final ArtifactRef artifactRef = BeanUtils.beanBuilder(ArtifactRef.class)
-      .set    (ArtifactRef::groupId   ).to(own.groupId())
-      .setTStr(ArtifactRef::artifactId).to("jctrl-simple")
-      .set    (ArtifactRef::version   ).to(own.version())
+      .set(ArtifactRef::groupId   ).to(own.groupId())
+      .set(ArtifactRef::artifactId).to(artifactId)
+      .set(ArtifactRef::version   ).to(own.version())
       .build()
     ;
     final String modulePath = toString(mpb.getAllJars(artifactRef));
