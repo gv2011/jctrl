@@ -3,14 +3,13 @@ package com.github.gv2011.jctrl;
 import static com.github.gv2011.util.Nothing.nothing;
 import static com.github.gv2011.util.ex.Exceptions.call;
 
-import java.util.concurrent.CountDownLatch;
-
 import com.github.gv2011.util.AutoCloseableNt;
 import com.github.gv2011.util.Nothing;
+import com.github.gv2011.util.lock.Latch;
 
 public class JCtrl implements AutoCloseableNt{
 
-  private final CountDownLatch latch = new CountDownLatch(1);
+  private final Latch<Nothing> latch = Latch.create();
   private final String processName;
 
 
@@ -26,7 +25,7 @@ public class JCtrl implements AutoCloseableNt{
   }
 
   public void close() {
-    latch.countDown();
+    latch.release(nothing());
   }
 
 }

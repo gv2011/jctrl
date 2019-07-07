@@ -1,8 +1,11 @@
 package com.github.gv2011.jctrl.service;
 
 import static com.github.gv2011.util.CollectionUtils.single;
+import static com.github.gv2011.util.Verify.verify;
 import static com.github.gv2011.util.Verify.verifyEqual;
+import static com.github.gv2011.util.Verify.verifyIn;
 import static com.github.gv2011.util.ex.Exceptions.bug;
+import static com.github.gv2011.util.icol.ICollections.setOf;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.lang.management.ManagementFactory;
@@ -20,7 +23,7 @@ import ch.qos.logback.classic.LoggerContext;
 
 public class Main {
 
-  static enum MainCommand{RUN, STOP, RUN_INTERNAL}
+  static enum MainCommand{RUN, RUN9, STOP, RUN_INTERNAL}
 
   static final int CONTROL_PORT = ShutdownSocket.CONTROL_PORT;
 
@@ -31,12 +34,13 @@ public class Main {
   private static final AtomicBoolean RUNNING = new AtomicBoolean();
 
   public static void main(final String[] args) {
-    int returnCode = 1;
+    int returnCode = 17;
     try {
-      verifyEqual(RUNNING.getAndSet(true), false);
+      verify(RUNNING.compareAndSet(false, true));
       final MainCommand cmd = MainCommand.valueOf(single(args));
       LOG.warn("{}: Started with command {}.", PROCESS, cmd);
-      if(cmd.equals(MainCommand.RUN)) runInternal();
+      if(cmd.equals(MainCommand.RUN)) runInternalCp();
+      else if(cmd.equals(MainCommand.RUN9)) runInternalMp();
       else if(cmd.equals(MainCommand.STOP)) stopInternal();
       else if(cmd.equals(MainCommand.RUN_INTERNAL)) {
         runTarget();
@@ -60,8 +64,12 @@ public class Main {
     new JCtrl(PROCESS).run();
   }
 
-  private static void runInternal() {
-    new DetachedRunner().run();
+  private static void runInternalCp() {
+    new DetachedRunnerCp().run();
+  }
+
+  private static void runInternalMp() {
+    new DetachedRunnerMp().run();
   }
 
   public static void stop(final String[] args) {
@@ -83,9 +91,13 @@ public class Main {
 
   public static void run(final String[] args) {
     try {
-      verifyEqual(RUNNING.getAndSet(true), false);
+      verifyEqual(args.length, 1);
+      verifyIn(args[0], setOf(MainCommand.RUN.toString(), MainCommand.RUN9.toString()), (e, a)->a.toString());
+      verify(RUNNING.compareAndSet(false, true));
       LOG.warn("{}: Started run.", PROCESS);
-      runInternal();
+      if(args[0].equals(MainCommand.RUN.toString())) runInternalCp();
+      else if(args[0].equals(MainCommand.RUN9.toString())) runInternalCp();
+      else bug();
     }
     catch (final Throwable t) {
       LOG.error(PROCESS, t);
