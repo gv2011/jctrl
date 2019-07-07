@@ -7,14 +7,14 @@
         </filter>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
-                %d{HH:mm:ss.sss} %-5level [%thread] %logger - %msg%n
+                %d{HH:mm:ss.sss} %-5level ${LOG_PREFIX}[%thread] %logger - %msg%n
             </Pattern>
         </encoder>
     </appender>
 
     <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/debug-log.%d{yyyy-MM-dd,GMT}.%i.txt</fileNamePattern>
+            <fileNamePattern>log/${LOG_PREFIX}debug-log.%d{yyyy-MM-dd,GMT}.%i.txt</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
@@ -30,7 +30,7 @@
             <level>warn</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/warn-log.%d{yyyy-MM-dd,GMT}.%i.txt</fileNamePattern>
+            <fileNamePattern>log/${LOG_PREFIX}warn-log.%d{yyyy-MM-dd,GMT}.%i.txt</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>

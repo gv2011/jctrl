@@ -1,6 +1,5 @@
 package com.github.gv2011.jctrl.service;
 
-import static com.github.gv2011.jctrl.service.Main.PROCESS;
 import static com.github.gv2011.util.ex.Exceptions.callWithCloseable;
 import static com.github.gv2011.util.ex.Exceptions.format;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.nio.file.Path;
 
 import org.slf4j.Logger;
 
@@ -16,30 +16,37 @@ import com.github.gv2011.jctrl.ShutdownSocket.Command;
 
 abstract class DetachedRunner {
 
-  static final String VERSION = "0.0.1-SNAPSHOT";
-  static final String SERVICE_DIR = "C:/programs/jctrl";
-
   private static final Logger LOG = getLogger(DetachedRunner.class);
 
+  final Path installDirectory;
+  final String command;
+  private final int port;
+
+  DetachedRunner(final Path installDirectory, final int port, final String command) {
+    this.installDirectory = installDirectory;
+    this.port = port;
+    this.command = command;
+  }
+
+
   final void run() {
-    LOG.info("{}: Started.", PROCESS);
+    LOG.info("Started.");
     checkControlPortIsAvailable();
     startService();
-    new ControlConnection().sendCommand(Command.WAIT_FOR_TERMINATION);
+    new ControlConnection(port).sendCommand(Command.WAIT_FOR_TERMINATION);
   }
 
 
   private void checkControlPortIsAvailable() {
-    final int port = Main.CONTROL_PORT;
+    final InetSocketAddress endpoint = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
     callWithCloseable(()->new ServerSocket(), s->{
       try {
-        s.bind(new InetSocketAddress(InetAddress.getLoopbackAddress(), port));
+        s.bind(endpoint);
       } catch (final IOException e) {
-        LOG.error("{}: Control port {} is not available.", PROCESS);
-        throw new RuntimeException(format("{}: Control port {} is not available.", PROCESS, port), e);
+        throw new RuntimeException(format("Control port at {} is not available.", endpoint), e);
       }
     });
-    LOG.info("{}: Control port {} is available.", PROCESS, port);
+    LOG.info("Control port at {} is available.", port);
   }
 
   abstract void startService();

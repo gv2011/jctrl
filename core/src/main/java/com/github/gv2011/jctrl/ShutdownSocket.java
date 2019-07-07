@@ -32,20 +32,19 @@ public final class ShutdownSocket {
 
   private static final Logger LOG = getLogger(ShutdownSocket.class);
 
-  public static final int CONTROL_PORT = 2997;
-
   public static enum Command {WAIT_FOR_TERMINATION, STOP;
     public String response() {
       return "DONE:" + name();
     }
   }
 
-  public static ShutdownSocket create(final AutoCloseableNt controlled, final String processName) {
+  public static ShutdownSocket create(final int port, final AutoCloseableNt controlled) {
     boolean success = false;
+    final InetSocketAddress endpoint = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
     final ServerSocket serverSocket = call(() -> new ServerSocket());
     try {
-      call(() -> serverSocket.bind(new InetSocketAddress(InetAddress.getLoopbackAddress(), CONTROL_PORT)));
-      final ShutdownSocket result = new ShutdownSocket(serverSocket, controlled, processName);
+      call(() -> serverSocket.bind(endpoint));
+      final ShutdownSocket result = new ShutdownSocket(serverSocket, controlled);
       success = true;
       return result;
     } finally {
@@ -53,7 +52,6 @@ public final class ShutdownSocket {
     }
   }
 
-  private final String          process;
   private final ExecutorService executors;
   private final ServerSocket    serverSocket;
   private final AutoCloseableNt controlled;
@@ -63,10 +61,9 @@ public final class ShutdownSocket {
   private boolean               terminated;
   private final Thread          shutdown;
 
-  private ShutdownSocket(final ServerSocket serverSocket, final AutoCloseableNt controlled, final String processName) {
+  private ShutdownSocket(final ServerSocket serverSocket, final AutoCloseableNt controlled) {
     this.serverSocket = serverSocket;
     this.controlled = controlled;
-    process = processName;
     executors = Executors.newCachedThreadPool();
     acceptLoop = executors.submit(this::acceptLoop);
     shutdown = new Thread(
@@ -78,7 +75,7 @@ public final class ShutdownSocket {
         while (!success) {
           success = call(() -> executors.awaitTermination(5, TimeUnit.SECONDS));
           if (!success) {
-            LOG.warn("{}: Waiting for executor service shutdown.", process);
+            LOG.warn("Waiting for executor service shutdown.");
           }
         }
       },
@@ -111,17 +108,17 @@ public final class ShutdownSocket {
           terminated = this.terminated;
         }
         if (!terminated) {
-          LOG.error(format("{}: Accept failed.", process), ex);
+          LOG.error("Accept failed.", ex);
         }
       }
       socket.ifPresent(s -> executors.submit(() -> handleConnection(s)));
     }
-    LOG.info("{}: Accept loop finished.", process);
+    LOG.info("Accept loop finished.");
     return Nothing.INSTANCE;
   }
 
   private Nothing handleConnection(final Socket socket) {
-    LOG.info("{}: Connection handling started.", process);
+    LOG.info("Connection handling started.");
     try {
       return callWithCloseable(() -> socket, s -> {
         final BufferedReader r = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
@@ -133,10 +130,10 @@ public final class ShutdownSocket {
         return Nothing.INSTANCE;
       });
     } catch (final Throwable t) {
-      LOG.error(format("{}: Connection handling aborted because of exception.", process), t);
+      LOG.error(format("Connection handling aborted because of exception."), t);
       return Nothing.INSTANCE;
     } finally {
-      LOG.info("{}: Connection handling finished.", process);
+      LOG.info("{}: Connection handling finished.");
     }
   }
 
@@ -145,14 +142,14 @@ public final class ShutdownSocket {
   }
 
   private Nothing handleCommand(final Command command, final Writer out) throws Exception {
-    LOG.info("{}: Handling command {}.", process, command);
+    LOG.info("Handling command {}.", command);
     if (command.equals(Command.WAIT_FOR_TERMINATION)) {
       waitForTermination(out);
     } else if (command.equals(Command.STOP)) {
       stop();
     } else;
     confirm(command, out);
-    LOG.info("{}: Command {} done.", process, command);
+    LOG.info("Command {} done.", command);
     return Nothing.INSTANCE;
   }
 

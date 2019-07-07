@@ -10,15 +10,14 @@ import com.github.gv2011.util.lock.Latch;
 public class JCtrl implements AutoCloseableNt{
 
   private final Latch<Nothing> latch = Latch.create();
-  private final String processName;
+  private final int port;
 
-
-  public JCtrl(final String processName) {
-    this.processName = processName;
+  public JCtrl(final int port) {
+    this.port = port;
   }
 
   public Nothing run(){
-    final ShutdownSocket controlSocket = ShutdownSocket.create(()->close(), processName);
+    final ShutdownSocket controlSocket = ShutdownSocket.create(port, ()->close());
     call(()->latch.await());
     controlSocket.waitUntilShutdown();
     return nothing();
