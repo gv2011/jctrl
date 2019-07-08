@@ -60,7 +60,7 @@ public class ImageBuilder {
         "--add-modules", "com.github.gv2011.util.gcol",
         "--add-modules", "com.github.gv2011.util.beans.imp",
         "--add-modules", "com.github.gv2011.jsong",
-        "--add-modules", "ch.qos.logback.classic"
+        "--add-modules", "com.github.gv2011.util.log.logback"
       }
     );
     out.flush();

@@ -49,9 +49,10 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>compile</scope>
+      <groupId>com.github.gv2011</groupId>
+      <artifactId>util-logback</artifactId>
+      <version>${util.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
