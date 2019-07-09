@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.spi.ToolProvider;
 
 import org.slf4j.Logger;
@@ -47,10 +48,16 @@ public class ImageBuilder {
 
   private final ModulePathBuilder mpb;
   private final PrunsrvLoader prunsrvLoader;
+  private final Path imageDirectory;
 
   public ImageBuilder(final ModulePathBuilder mpb, final PrunsrvLoader prunsrvLoader) {
     this.mpb = mpb;
     this.prunsrvLoader = prunsrvLoader;
+    imageDirectory = Paths.get("image").toAbsolutePath().normalize();
+  }
+
+  public Path imageDirectory(){
+    return imageDirectory;
   }
 
   public void buildImage(){
@@ -60,8 +67,7 @@ public class ImageBuilder {
     LOG.info("Module Path:\n  {}", allJars.stream().map(Path::toString).collect(joining("\n  ")));
     final String modulePath = toString(allJars);
 
-    final Path imageDir = Paths.get("image").toAbsolutePath().normalize();
-    FileUtils.delete(imageDir.toFile());
+    FileUtils.delete(imageDirectory.toFile());
 
     final ToolProvider tp = ToolProvider.findFirst("jlink").get();
     final StringWriter swOut = new StringWriter();
@@ -71,7 +77,7 @@ public class ImageBuilder {
     final int resultCode = tp.run(
       out, err,
       new String[]{
-        "--output", imageDir.toString(),
+        "--output", imageDirectory.toString(),
         "--launcher", "main="+marker.module().getName()+"/"+Main.class.getName(),
         "--module-path", modulePath,
         "--add-modules", marker.module().getName(),
@@ -88,11 +94,16 @@ public class ImageBuilder {
     verify(swErr.toString(), String::isBlank, e->format("Jlink error output:\n{}", e));
     verifyEqual(resultCode, 0);
 
-    prunsrvLoader.loadPrunsrv(imageDir.resolve("bin"));
+    prunsrvLoader.loadPrunsrv(imageDirectory.resolve("bin"));
 
+    copyResources("jctrl.ico", "jctrl.ico.source.txt");
   }
 
-
+  private void copyResources(final String... resouceNames){
+    Arrays.stream(resouceNames).forEach(
+      r->FileUtils.copy(getClass().getResource(r), imageDirectory.resolve(r))
+    );
+  }
 
   private String toString(final ISortedSet<Path> allJars) {
     final String pathSep = Character.toString(File.pathSeparatorChar);

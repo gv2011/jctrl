@@ -1,0 +1,13 @@
+[Setup]
+AppName=jctrl
+AppVersion=0.1
+AppCopyright=Vinz 2019
+DefaultDirName={pf}\jctrl
+TimeStampsInUTC=True
+AllowRootDirectory=True
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
+OutputBaseFilename=jctrl-setup
+
+[Files]
+§§§-FILES-§§§
