@@ -1,6 +1,6 @@
 [Setup]
 AppName=jctrl
-AppVersion=0.1
+AppVersion=§§§-VERSION-§§§
 AppCopyright=Vinz 2019
 DefaultDirName={pf}\jctrl
 TimeStampsInUTC=True
@@ -8,6 +8,13 @@ AllowRootDirectory=True
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 OutputBaseFilename=jctrl-setup
+LicenseFile=LICENSE.txt
 
 [Files]
 §§§-FILES-§§§
+
+[Run]
+Filename: "{app}\bin\install-jctrl-service.bat"; WorkingDir: "{app}"
+
+[UninstallRun]
+Filename: "{app}\bin\remove-jctrl-service.bat"; WorkingDir: "{app}"

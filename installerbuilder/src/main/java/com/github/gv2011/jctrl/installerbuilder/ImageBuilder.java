@@ -96,12 +96,19 @@ public class ImageBuilder {
 
     prunsrvLoader.loadPrunsrv(imageDirectory.resolve("bin"));
 
-    copyResources("jctrl.ico", "jctrl.ico.source.txt");
+    copyRootResources("jctrl.ico", "jctrl.ico.source.txt", "LICENSE.txt");
+    copyScripts("install-jctrl-service.bat", "remove-jctrl-service.bat");
   }
 
-  private void copyResources(final String... resouceNames){
+  private void copyRootResources(final String... resouceNames){
     Arrays.stream(resouceNames).forEach(
       r->FileUtils.copy(getClass().getResource(r), imageDirectory.resolve(r))
+    );
+  }
+
+  private void copyScripts(final String... resouceNames){
+    Arrays.stream(resouceNames).forEach(
+      r->FileUtils.copy(getClass().getResource(r), imageDirectory.resolve("bin").resolve(r))
     );
   }
 

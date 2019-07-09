@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.joining;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import com.github.gv2011.jctrl.service.JCtrlServiceMarker;
 import com.github.gv2011.m2t.M2t;
 import com.github.gv2011.m2t.M2tFactory;
 import com.github.gv2011.util.FileUtils;
@@ -48,7 +49,10 @@ public class BuildInnoSetupDirectory {
   private void createInnoScript() {
     final String template = StreamUtils.readText(()->getClass().getResourceAsStream("jctrl.iss.txt"));
     FileUtils.writeText(
-      template.replace("§§§-FILES-§§§", createFileList()),
+      ( template
+        .replace("§§§-VERSION-§§§", new JCtrlServiceMarker().artifactRef().version().toString())
+        .replace("§§§-FILES-§§§"  , createFileList())
+      ),
       imageBuilder.imageDirectory().resolve("jctrl.iss")
     );
   }
