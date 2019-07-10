@@ -50,12 +50,10 @@
     <dependency>
       <groupId>com.github.gv2011.m2t</groupId>
       <artifactId>m2t-api</artifactId>
-      <version>0.0.5-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.github.gv2011.m2t</groupId>
       <artifactId>m2t-imp</artifactId>
-      <version>0.0.5-SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -83,42 +81,12 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-       </resource>
+      </resource>
       <resource>
         <directory>src/main/filtered</directory>
         <filtering>true</filtering>
       </resource>
     </resources>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>commons-daemon</groupId>
-                  <artifactId>commons-daemon</artifactId>
-                  <classifier>bin-windows</classifier>
-                  <type>zip</type>
-                  <version>1.2.0</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                  <!-- <destFileName>[ filename ]</destFileName> -->
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 
 </project>
