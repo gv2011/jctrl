@@ -4,7 +4,7 @@
   <parent>
     <artifactId>jctrl-parent</artifactId>
     <groupId>com.github.gv2011.jctrl</groupId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
   </parent>
   <artifactId>jctrl-service</artifactId>
   

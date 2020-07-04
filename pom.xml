@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.github.gv2011.jctrl</groupId>
   <artifactId>jctrl-parent</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>pom</packaging>
   <name>Vinz JCtrl</name>
   <description>Java System Controller</description>
@@ -37,7 +37,7 @@
     <connection>scm:git:git@github.com:gv2011/jctrl.git</connection>
     <developerConnection>scm:git:git@github.com:gv2011/jctrl.git</developerConnection>
     <url>https://github.com/gv2011/jctrl</url>
-    <tag>HEAD</tag>
+    <tag>jctrl-parent-0.0.2</tag>
   </scm>
   
   <modules>
