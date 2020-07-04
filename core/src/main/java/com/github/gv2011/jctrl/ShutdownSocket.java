@@ -147,7 +147,7 @@ public final class ShutdownSocket {
       waitForTermination(out);
     } else if (command.equals(Command.STOP)) {
       stop();
-    } else;
+    }
     confirm(command, out);
     LOG.info("Command {} done.", command);
     return Nothing.INSTANCE;
@@ -158,7 +158,7 @@ public final class ShutdownSocket {
     out.flush();
   }
 
-  private void stop() throws IOException {
+  private void stop(){
     controlled.close();
     close();
   }
