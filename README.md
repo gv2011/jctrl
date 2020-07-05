@@ -6,4 +6,4 @@
 # jctrl
 Java Service Infrastructure
 
-master branch
+dev branch
