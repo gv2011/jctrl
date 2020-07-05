@@ -2,3 +2,6 @@ language: java
 jdk: openjdk14
 install: true
 script: mvn clean install -B
+jobs:
+  include:
+  - os: linux
