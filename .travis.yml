@@ -5,3 +5,4 @@ script: mvn clean install -B
 jobs:
   include:
   - os: linux
+  - os: osx
