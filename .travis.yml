@@ -6,3 +6,4 @@ jobs:
   include:
   - os: linux
   - os: osx
+  - os: windows
