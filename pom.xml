@@ -43,7 +43,9 @@
   <modules>
     <module>core</module>
     <module>gui</module>
+    <module>hello</module>
     <module>installerbuilder</module>
+    <module>process</module>
     <module>service</module>
     <module>simple</module>
   </modules>
