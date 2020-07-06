@@ -73,8 +73,9 @@ public class ProcessStarter {
 		processBuilder.command(command);
 		System.out.println();
 		final Process process = call(processBuilder::start);
+		LOG.info("PID: {}.", process.pid());
 
-		final Thread t = new Thread(()->{
+		final Thread tErr = new Thread(()->{
 			final InputStream err = process.getErrorStream();
 			int b = call(()->err.read());
 			while(b!=-1){
@@ -83,16 +84,27 @@ public class ProcessStarter {
 			}
 			LOG.info("Error EOS");
 		});
-		t.start();
+		tErr.start();
 
-		final InputStream in = process.getInputStream();
-		int b = call(()->in.read());
-		while(b!=-1){
-			System.out.print((char)b);
-			b = call(()->in.read());
-		}
-		LOG.info("EOS");
-		call(()->t.join());
+		final Thread tOut = new Thread(()->{
+			final InputStream in = process.getInputStream();
+			int b = call(()->in.read());
+			while(b!=-1){
+				System.out.print((char)b);
+				b = call(()->in.read());
+			}
+			LOG.info("EOS");
+		});
+		tOut.start();
+
+		call(()->process.getOutputStream().close());
+
+		call(()->Thread.sleep(1000));
+		process.destroy();
+
+		call(()->tOut.join());
+		call(()->tErr.join());
+
 		final int exitValue = call(()->process.waitFor());
 		System.out.println();
 		LOG.info("Process terminated with {}.", exitValue);
