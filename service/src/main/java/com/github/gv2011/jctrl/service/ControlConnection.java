@@ -15,13 +15,16 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 
 import com.github.gv2011.jctrl.ShutdownSocket.Command;
 import com.github.gv2011.util.Nothing;
+import com.github.gv2011.util.icol.Opt;
+import com.github.gv2011.util.sec.SecUtils;
 import com.github.gv2011.util.time.Clock;
 
 public class ControlConnection {
@@ -29,10 +32,12 @@ public class ControlConnection {
   private static final Logger LOG = getLogger(ControlConnection.class);
 
   private final int port;
+  private Path certificateDirectory;
   private final Clock clock = Clock.get();
   private final Duration retryInterval = Duration.ofSeconds(1);
 
-  public ControlConnection(final int port){
+
+  public ControlConnection(final int port, final Path certificateDirectory){
     this.port = port;
   }
 
@@ -44,22 +49,22 @@ public class ControlConnection {
     );
   }
 
-  @SuppressWarnings("resource")
   private Socket establishControlConnection(final boolean retry) {
+    final RSAPublicKey publicKey = SecUtils.getPublicKey(certificateDirectory);
     final InetSocketAddress endpoint = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
-    Optional<Socket> socket = Optional.empty();
+    Opt<Socket> socket = Opt.empty();
     while(!socket.isPresent()) {
-      final Socket s = new Socket();
+      Opt<Socket> s = Opt.empty();
       try {
-        s.connect(endpoint);
-        socket = Optional.of(s);
-      } catch (final IOException e) {
+        s = Opt.of(SecUtils.connect(certificateDirectory, publicKey, endpoint));
+        socket = s;
+      } catch (final Exception e) {
         if(retry) LOG.warn(format("Could not connect to control port {}.", port), e);
         else throw wrap(e);
       }
       finally {
         if(!socket.isPresent()) {
-          call(s::close);
+          s.ifPresent(s1->call(s1::close));
           if(retry){
             LOG.info("Waiting {} second before trying again.", retryInterval);
             clock.sleep(retryInterval);

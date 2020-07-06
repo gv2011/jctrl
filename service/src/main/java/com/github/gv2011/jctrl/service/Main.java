@@ -22,11 +22,17 @@ public final class Main{
 
   private static final Logger LOG = getLogger(Main.class);
 
+  static final String CERT_DIR_NAME = "tls";
+
   static enum MainCommand{RUN, RUN9, STOP, RUN_INTERNAL}
 
   private static final AtomicBoolean RUNNING = new AtomicBoolean();
 
   public static void main(final String[] args) {
+     main2(args, null);
+  }
+
+  static void main2(final String[] args, final Path java) {
     verify(RUNNING.compareAndSet(false, true));
     MainUtils.runCommand(
       args,
@@ -40,10 +46,20 @@ public final class Main{
 
   private final ArtifactRef artifact = new JCtrlServiceMarker().artifactRef();
   private final Path installDirectory;
+  private final Path certificateDirectory;
+  private Path java;
   private final int port = 2997;
+
 
   private Main(){
     installDirectory = call(()->Paths.get(".").toRealPath());
+    certificateDirectory = installDirectory.resolve(CERT_DIR_NAME);
+  }
+
+  private Main(final Path installDirectory, final Path java){
+    this.installDirectory = installDirectory;
+    certificateDirectory = installDirectory.resolve(CERT_DIR_NAME);
+    this.java = java;
   }
 
   private void dispatch(final MainCommand cmd) {
@@ -57,7 +73,7 @@ public final class Main{
 
   @SuppressWarnings("resource")
   private void runTarget() {
-    new JCtrl(port).run();
+    new JCtrl(port, certificateDirectory).run();
   }
 
   private void runInternalCp() {
@@ -65,11 +81,11 @@ public final class Main{
   }
 
   private void runInternalMp() {
-    new DetachedRunnerMp(installDirectory, port, Main.class, MainCommand.RUN_INTERNAL.name()).run();
+    new DetachedRunnerMp(installDirectory, java, port, Main.class, MainCommand.RUN_INTERNAL.name()).run();
   }
 
   private Nothing stopInternal() {
-    return new ControlConnection(port).sendCommand(Command.STOP);
+    return new ControlConnection(port, certificateDirectory).sendCommand(Command.STOP);
   }
 
 }
