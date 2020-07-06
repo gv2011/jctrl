@@ -33,7 +33,9 @@ abstract class DetachedRunner {
     LOG.info("Started.");
     checkControlPortIsAvailable();
     startService();
-    new ControlConnection(port).sendCommand(Command.WAIT_FOR_TERMINATION);
+    new ControlConnection(port, installDirectory.resolve(Main.CERT_DIR_NAME))
+      .sendCommand(Command.WAIT_FOR_TERMINATION)
+    ;
   }
 
 

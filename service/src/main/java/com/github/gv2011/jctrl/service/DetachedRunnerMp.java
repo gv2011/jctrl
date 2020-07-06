@@ -18,10 +18,11 @@ final class DetachedRunnerMp extends DetachedRunner{
   private final Path java;
   private final Class<?> mainClass;
 
-  DetachedRunnerMp(final Path installDirectory, final int port, final Class<?> mainClass, final String command) {
+  DetachedRunnerMp(final Path installDirectory, final Path java, final int port, final Class<?> mainClass, final String command) {
     super(installDirectory, port, command);
-    java = installDirectory.resolve("bin").resolve("java.exe");
+//    java = installDirectory.resolve("bin").resolve("java.exe");
     verify(Files.isRegularFile(java));
+    this.java = java;
     this.mainClass = mainClass;
   }
 
