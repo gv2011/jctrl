@@ -142,7 +142,7 @@ public final class ServiceSocket implements AutoCloseableNt{
       waitForTermination(out);
     } else if (command.equals(Command.STOP)) {
       stop();
-    } else;
+    }
     confirm(command, out);
     LOG.info("{}: Command {} done.", process, command);
     return Nothing.INSTANCE;
@@ -153,7 +153,7 @@ public final class ServiceSocket implements AutoCloseableNt{
     out.flush();
   }
 
-  private void stop() throws IOException {
+  private void stop() {
     controlled.close();
     close();
   }

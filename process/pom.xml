@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>jctrl-parent</artifactId>
     <groupId>com.github.gv2011.jctrl</groupId>
     <version>0.0.3-SNAPSHOT</version>
   </parent>
-  <artifactId>jctrl-gui</artifactId>
+
+  <artifactId>jctrl-process</artifactId>
+
   <dependencies>
     <dependency>
       <groupId>com.github.gv2011</groupId>
@@ -14,21 +19,19 @@
       <version>${util.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.github.gv2011.m2t</groupId>
+      <artifactId>m2t-api</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.github.gv2011</groupId>
       <artifactId>gcol</artifactId>
       <version>${util.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.gv2011</groupId>
-      <artifactId>util-beans</artifactId>
-      <version>${util.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.gv2011</groupId>
-      <artifactId>jsong</artifactId>
-      <version>${util.version}</version>
+      <groupId>com.github.gv2011.m2t</groupId>
+      <artifactId>m2t-imp</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -44,5 +47,21 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.github.gv2011.process.example.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
 </project>

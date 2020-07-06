@@ -4,18 +4,18 @@
   <parent>
     <artifactId>parent-gv</artifactId>
     <groupId>com.github.gv2011</groupId>
-    <version>0.5.0</version>
+    <version>0.5.6</version>
   </parent>
   <groupId>com.github.gv2011.jctrl</groupId>
   <artifactId>jctrl-parent</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Vinz JCtrl</name>
   <description>Java System Controller</description>
   <url>https://github.com/gv2011/jctrl</url>
 
   <properties>
-    <util.version>0.5.1-SNAPSHOT</util.version>
+    <util.version>0.5.6</util.version>
   </properties>
 
   <licenses>
@@ -24,6 +24,7 @@
       <url>https://opensource.org/licenses/MIT</url>
     </license>
   </licenses>
+  
   <developers>
     <developer>
       <id>gv2011</id>
@@ -31,16 +32,20 @@
       <url>https://github.com/gv2011</url>
     </developer>
   </developers>
+  
   <scm>
     <connection>scm:git:git@github.com:gv2011/jctrl.git</connection>
     <developerConnection>scm:git:git@github.com:gv2011/jctrl.git</developerConnection>
     <url>https://github.com/gv2011/jctrl</url>
     <tag>HEAD</tag>
   </scm>
+  
   <modules>
     <module>core</module>
     <module>gui</module>
+    <module>hello</module>
     <module>installerbuilder</module>
+    <module>process</module>
     <module>service</module>
     <module>simple</module>
   </modules>
@@ -50,12 +55,12 @@
       <dependency>
         <groupId>com.github.gv2011.m2t</groupId>
         <artifactId>m2t-api</artifactId>
-        <version>0.5.0</version>
+        <version>0.5.6</version>
       </dependency>
       <dependency>
         <groupId>com.github.gv2011.m2t</groupId>
         <artifactId>m2t-imp</artifactId>
-        <version>0.5.0</version>
+        <version>0.5.6</version>
         <scope>runtime</scope>
       </dependency>
     </dependencies>
